@@ -2,14 +2,36 @@
 
 All notable changes to intelastart.com are documented here.
 
+Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+
+---
+
 ## [Unreleased]
 
-## [1.0.0] — 2026-04-07
+## [1.2.0] — 2026-04-07
 
 ### Added
-- AI business intelligence and startup acceleration landing site
-- Homepage with service offerings and social proof (500+ automations, $2M+ revenue)
-- about, blog, pricing, privacy, terms pages
-- services/ directory for individual service pages
+- SDLC documentation platform (myprd) installed
+- PRD.md derived from code review
+
+## [1.1.0] — 2026-03-28 / 2026-03-30
+
+### Added
+- AGENTS.md swarm assignments and swarm-gate CI workflow
+- AGENT.md manifest for agent infrastructure
+- Knowledge layer: Obsidian vault, MEMORY.md, NotebookLM integration
+- Dependabot config, copilot-instructions, DevEx tooling
+- UTC ISO 8601 time rules to AGENTS.md and copilot-instructions
+
+### Changed
+- Cross-org forensic audit completed 2026-03-29
+- Principal codebase audit completed 2026-03-29
+
+## [1.0.0] — 2026-02-14
+
+### Added
+- Initial launch of Intelastart B2B consulting site
+- Service pages: Starter ($499/mo), Growth, Enterprise tiers
+- About, pricing, blog, services, terms, privacy pages
 - robots.txt, sitemap.xml
-- CNAME configured for intelastart.com
+- CNAME for custom domain intelastart.com
