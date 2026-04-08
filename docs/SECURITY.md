@@ -1,37 +1,66 @@
 # Security — intelastart.com
 
-## Content Security Policy
+## Overview
 
-Add CSP via `<meta http-equiv="Content-Security-Policy">` in all HTML files.
+Intelastart is a B2B consulting marketing site. It is a static HTML site with contact/inquiry forms handled via third-party form services. The following security practices apply.
 
-Recommended:
-- `default-src 'self'`
-- `script-src 'self' 'unsafe-inline'`
-- `style-src 'self' 'unsafe-inline'`
-- `img-src 'self' data: https:`
-- `object-src 'none'`
-- `frame-src 'none'`
+## Content Security Policy (CSP)
 
-## Contact Form / Lead Capture
+Apply CSP via `<meta http-equiv="Content-Security-Policy">` in all HTML pages.
 
-If contact forms or lead capture are added:
-- Use a third-party form service (Formspree, Netlify Forms) — do not process form data in this static repo.
-- Do not store form submissions in the repo.
-- Embed only the form endpoint URL, not any service secret keys.
+```html
+<meta http-equiv="Content-Security-Policy"
+  content="default-src 'self';
+           script-src 'self' 'unsafe-inline' https://www.googletagmanager.com;
+           style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+           font-src 'self' https://fonts.gstatic.com;
+           img-src 'self' data: https:;
+           connect-src 'self' https://www.google-analytics.com https://formspree.io;
+           frame-src 'none';
+           object-src 'none';">
+```
 
-## Secrets
+Replace `https://formspree.io` with the actual form endpoint domain in use. Tighten `'unsafe-inline'` by externalizing scripts.
 
-Do not commit:
+## HTTPS Enforcement
+
+GitHub Pages automatically enforces HTTPS. Verify "Enforce HTTPS" is enabled in repository Settings → Pages. All business inquiries and contact forms must operate over HTTPS.
+
+## Contact Form Security
+
+- Use a reputable third-party form service (Formspree, Netlify Forms, etc.) — never build server-side form handling in a static repo
+- The form endpoint token/ID is public (it's in the HTML) — this is expected; protect against spam with reCAPTCHA or honeypot fields
+- Never embed CRM API secret keys or authentication tokens client-side
+
+## Secrets Management
+
+Never commit to this repository:
 - CRM API keys (HubSpot, Salesforce, etc.)
-- Email marketing API keys
-- Calendly or booking widget tokens
-- Any webhook signing secrets
+- Email platform API keys
+- Analytics write tokens
+- Any `.env` file
 
-## Legal Pages
+Required `.gitignore` entries:
+```
+.env
+.env.*
+*.key
+secrets/
+node_modules/
+```
 
-- `privacy.html` — update when adding new data processors (CRM, analytics, chat widgets).
-- `terms.html` — should reflect the consulting services offered.
+## Client-Facing Data
 
-## Reporting Issues
+- Do not promise data security postures in marketing copy that cannot be technically substantiated
+- Privacy policy (`privacy.html`) must accurately describe what data is collected via forms and analytics
+- Terms (`terms.html`) must reflect the actual consulting engagement terms
 
-Contact the repo owner privately for any security concerns.
+## HTTPS and Domain Security
+
+- CNAME file must be present for GitHub Pages to provision the custom domain TLS certificate
+- Verify certificate renewal (GitHub Pages renews automatically via Let's Encrypt)
+- Enable HSTS by enforcing HTTPS at the DNS/CDN level if using Cloudflare in front of GitHub Pages
+
+## Vulnerability Reporting
+
+Report security issues privately to the repository owner. Do not post vulnerability details in public issues.
